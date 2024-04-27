@@ -1,6 +1,7 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
+const joi = require('joi')
 
 const contactsRouter = require('./routes/api/contacts')
 
@@ -11,6 +12,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
+app.use(joi())
 
 app.use('/api/contacts', contactsRouter)
 
