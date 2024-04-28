@@ -1,5 +1,6 @@
 const express = require("express");
 const Joi = require("joi");
+
 const {
   listContacts,
   getContactById,
@@ -7,6 +8,7 @@ const {
   addContact,
   updateContact,
 } = require("../../models/contacts.js");
+
 const router = express.Router();
 
 const contex = Joi.object({

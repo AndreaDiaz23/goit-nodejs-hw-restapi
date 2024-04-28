@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const crypto = require("crypto");
+
 /* const { json } = require('express'); */
 
 const contactsPath = './models/contacts.json'
@@ -14,12 +15,11 @@ const listContacts = async () => {
 }
 
 const getContactById = async (contactId) => {
- return fs.readFile(contactsPath)
-        .then(data => 
-          { const newData = JSON.parse(data)
-            newData.filter(item => item.id === contactId)}            
-        )
-        .catch(err => console.log(err.message))
+  return fs.readFile(contactsPath)
+  .then(data => newData = JSON.parse(data).filter(item => item.id == contactId)
+      
+  )
+  .catch(err => console.log(err.message))
 }
 
 const removeContact = async (contactId) => {
