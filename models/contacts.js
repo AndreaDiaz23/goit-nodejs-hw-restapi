@@ -1,11 +1,72 @@
-const fs = require('fs').promises;
+const fs = require("fs").promises;
 const crypto = require("crypto");
+const Contact = require("./newcontacts");
 
 /* const { json } = require('express'); */
 
-const contactsPath = './models/contacts.json'
+/* const contactsPath = './models/contacts.json' */
 
+const listContacts = async () => {
+  const result = await Contact.find();
+  return result;
+};
 
+const getContactById = async (contactId) => {
+  try {
+    const result = await Contact.findOne({ _id: contactId });
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+const removeContact = async (contactId) => {
+  try {
+    const result = await Contact.findByIdAndDelete({ _id: contactId });
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+const addContact = async (body) => {
+  const result = await Contact.create(body);
+  return result;
+};
+
+const updateContact = async (contactId, body) => {
+  try {
+    const result = await Contact.findByIdAndUpdate(
+      { _id: contactId },
+      { name: body.name, email: body.email, phone: body.phone }
+    );
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+const updateStatusContact = async (contactId, favorite) => {
+  try {
+    const result = await Contact.findByIdAndUpdate(
+      { _id: contactId },
+      { favorite: favorite }
+    );
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+module.exports = {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+  updateContact,
+  updateStatusContact,
+};
+
+/* 
 const listContacts = async () => {
 
   return fs.readFile(contactsPath)
@@ -83,3 +144,5 @@ module.exports = {
   addContact,
   updateContact,
 }
+ */
+/* AndreaDiaz23 Cocacola_931023 */
