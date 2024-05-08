@@ -1,7 +1,6 @@
 const express = require("express");
 const Joi = require("joi");
-/* const { Schema, model } = require("mongoose") */
-
+const { Schema, model } = require("mongoose");
 
 const {
   listContacts,
@@ -26,12 +25,13 @@ const contex = Joi.object({
 
 router.get("/", async (req, res, next) => {
   const users = await listContacts();
+  console.log(users);
   res.status(200).send(users);
 });
 
 router.get("/:contactId", async (req, res, next) => {
   const user = await getContactById(req.params.contactId);
-  if (user.length) {
+  if (user) {
     res.status(200).send(user);
   } else {
     res.status(404);

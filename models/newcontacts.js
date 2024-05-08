@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
+
 const Schema = mongoose.Schema;
+
 
 const SchemaCont = new Schema({
 
@@ -18,7 +20,7 @@ const SchemaCont = new Schema({
           default: false,
         },
 
-}, { collection: 'Contacts' });
+}, { collection: 'contacts' });
 
 const Contact = mongoose.model("Contact", SchemaCont);
 
