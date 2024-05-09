@@ -2,8 +2,8 @@ const fs = require("fs").promises;
 const crypto = require("crypto");
 const Contact = require("./newcontacts");
 
-/* const { json } = require('express'); */
-/* const contactsPath = './models/contacts.json'  */
+const { json } = require('express'); 
+const contactsPath = './models/contacts.json';
 
 const listContacts = async () => {
   const result = await Contact.find();
