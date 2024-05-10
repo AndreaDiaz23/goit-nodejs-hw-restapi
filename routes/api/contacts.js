@@ -1,5 +1,6 @@
 const express = require("express");
 const Joi = require("joi");
+const { Schema, model } = require("mongoose");
 
 const {
   listContacts,
@@ -7,6 +8,7 @@ const {
   removeContact,
   addContact,
   updateContact,
+  updateStatusContact,
 } = require("../../models/contacts.js");
 
 const router = express.Router();
@@ -24,12 +26,13 @@ const contex = Joi.object({
 
 router.get("/", async (req, res, next) => {
   const users = await listContacts();
+  console.log(users);
   res.status(200).send(users);
 });
 
 router.get("/:contactId", async (req, res, next) => {
   const user = await getContactById(req.params.contactId);
-  if (user.length) {
+  if (user) {
     res.status(200).send(user);
   } else {
     res.status(404);
@@ -78,7 +81,7 @@ router.put("/:contactId", async (req, res, next) => {
       res.status(404).send({ message: error.message });
     } else {
       const index = await updateContact(req.params.contactId, req.body);
-      if (index === 1) {
+      if (index) {
         res.status(200).send({
           messege: "Update Conctact Completed",
           contact: {
@@ -94,6 +97,22 @@ router.put("/:contactId", async (req, res, next) => {
     }
   } else {
     res.status(404).send({ message: "missing fields" });
+  }
+});
+
+router.patch("/:contactId", async (req, res, next) => {
+  if (req.body.favorite) {
+    const result = await updateStatusContact(
+      req.params.contactId,
+      req.body.favorite
+    );
+    if (result != null) {
+      res.status(200).send({ messege: "Update Conctact Completed" });
+    } else {
+      res.status(404).send({ message: "Id not found" });
+    }
+  } else {
+    res.status(404).send({ message: "missing field favorite" });
   }
 });
 
